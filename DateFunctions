@@ -1,0 +1,34 @@
+/* ------------------------------------------
+** A collection of global functions that deal with the realities of dates in Ninox
+** -----------------------------------------*/
+
+function IsDate(xDate : date) do
+	if number(xDate) = 0 then false else true end
+end;
+function DateOnly(xDate : date) do
+	date(year(xDate), month(xDate), day(xDate))
+end;
+function NDate(d : date) do
+	number(DateOnly(d))
+end;
+function DateCompare(d1 : date,d2 : date,op : text) do
+	switch op do
+	case "<":
+		NDate(d1) < NDate(d2)
+	case ">":
+		NDate(d1) > NDate(d2)
+	case "<=":
+		NDate(d1) <= NDate(d2)
+	case ">=":
+		NDate(d1) >= NDate(d2)
+	default:
+		NDate(d1) = NDate(d2)
+	end
+end;
+function between(d : date,s : date,e : date) do
+	if NDate(d) >= NDate(s) and NDate(d) <= NDate(e) then
+		true
+	else
+		false
+	end
+end;
