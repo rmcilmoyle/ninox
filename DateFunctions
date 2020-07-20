@@ -32,3 +32,22 @@ function between(d : date,s : date,e : date) do
 		false
 	end
 end;
+/* ---------------------------------------------
+** Add W workdays to a date returning the workday that would result
+** ---------------------------------------------*/
+function WorkEndDate(S : date,W : number) do
+	var X := 1;
+	if W > 1 then
+		while workdays(S, date(year(S), month(S), day(S) + X + 1)) <= W and X < 365 do 
+			X := X + 1
+		end
+;
+		if weekday(date(year(S), month(S), day(S) + X)) = 6 then
+			date(year(S), month(S), day(S) + X - 2)
+		else
+			date(year(S), month(S), day(S) + X)
+		end
+	else
+		S
+	end
+end;
