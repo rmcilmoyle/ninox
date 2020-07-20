@@ -1,0 +1,10 @@
+/******************************
+** A collection of number functions
+******************************/
+
+function int(x : number) do
+	number(item(split(text(x), "."), 0))
+end;
+function roundup(x : number) do
+	if int(x) < x then int(x) + 1 else x end
+end;
