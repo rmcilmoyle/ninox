@@ -1,0 +1,28 @@
+/*************************
+** Utility stack functions
+**
+** used these functions to dynamically perform project management dependency mapping using a text field as a composite field.
+** I used this to build a stack of record Id's in order to do binary tree and depth wise search., eg...
+**
+*************************/
+
+function push(Stack : text,Object : text) do
+	"--- add to the stack ---";
+	if count(split(Stack, ",")) = 0 then
+		Object
+	else
+		Stack + "," + Object
+	end
+end;
+function pop(Stack : text) do
+	"--- remove last item ---";
+	let AStack := split(Stack, ",");
+	"--- zero based array drop last item ---";
+	slice(AStack, 0, count(AStack) - 2)
+end;
+function get(Stack : text) do
+	"--- return last item from stack";
+	let AStack := split(Stack, ",");
+	item(AStack, count(AStack) - 1)
+end;
+
