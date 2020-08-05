@@ -3,5 +3,14 @@ function IsEmpty(xText : text) do
 		true
 	else
 		false
-	end
+	end;
+end;
+	
+function clean( xString : text, xReplace : text ) do
+   let valid := "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM,.;:!#$%&()/\";
+   var result := "";
+   for i in range(0 , length(xString) ) do
+        if contains(valid,substr(xString,i,1)) then result := result + substr(xString,i,1) else result := result + xReplace end
+   end;
+   result
 end;
