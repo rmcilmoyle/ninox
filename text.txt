@@ -1,7 +1,0 @@
-function IsEmpty(xText : text) do
-	if trim(xText) = "" or xText = null then
-		true
-	else
-		false
-	end
-end;
