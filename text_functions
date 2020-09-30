@@ -18,3 +18,9 @@ function clean(xString : text,xReplace : text) do
 	end;
 	result
 end
+
+function IsIn(TextArray : text,SearchItem : text) do
+	let xSearch := ", " + TextArray + ",";
+	let xItem := ", " + trim(SearchItem) + ",";
+	contains(xSearch, xItem)
+end
