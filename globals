@@ -1,0 +1,65 @@
+"------------------------------------------------------------------------
+ Global functions by Roger Mcilmoyle
+ ------------------------------------------------------------------------";
+function Global(global_key : text) do
+	first((select Global)[Key = global_key].Id)
+end;
+function SetGlobal(global_key : text,global_text : text,global_textmulti : text,global_number : number,global_date : date) do
+	if cnt((select Global)[Key = global_key]) = 0 then
+		"----------------------
+		 create the global variable
+		 ----------------------";
+		let newglobal := (create Global);
+		newglobal.(Key := global_key);
+		newglobal.(Text := global_text);
+		newglobal.(TextMulti := global_textmulti);
+		newglobal.(Number := global_number);
+		newglobal.(Date := global_date)
+	else
+		let global := record(Global,Global(global_key));
+		global.(Text := if global_text = "" then global.Text else global_text end);
+		global.(TextMulti := if global_textmulti = "" then
+				global.TextMulti
+			else
+				global_textmulti
+			end);
+		global.(Date := if global_date = null then global.Date else global_date end);
+		global.(Number := if global_number = 0 then global.Number else global_number end)
+	end
+end;
+function SetGlobalText(global_key : text,global_text : text) do
+	SetGlobal(global_key, global_text, text(null), number(null), date(null))
+end;
+function SetGlobalTextMulti(global_key : text,global_textmulti : text) do
+	SetGlobal(global_key, text(null), global_textmulti, 0, date(null))
+end;
+function SetGlobalNumber(global_key : text,global_number : number) do
+	SetGlobal(global_key, text(null), text(null), global_number, date(null))
+end;
+function SetGlobalDate(global_key : text,global_date : date) do
+	SetGlobal(global_key, text(null), text(null), number(null), global_date)
+end;
+function GlobalValue(global_key : text) do
+	record(Global,Global(global_key)).Number
+end;
+function GlobalText(global_key : text) do
+	record(Global,Global(global_key)).Text
+end;
+function GlobalTextMulti(global_key : text) do
+	record(Global,Global(global_key)).TextMulti
+end;
+function GlobalDate(global_key : text) do
+	record(Global,Global(global_key)).Date
+end;
+function Debug(log_name : text,log_message : text,log_value : number) do
+	"-----------------------------------
+	 Use globals to turn logging on and off, 
+	 this could easily be entended to provide logging levels
+     ----------------------------------=";
+	if GlobalValue("DEBUG") > 0 then
+		let newlog := (create Debug);
+		newlog.(Log := log_name);
+		newlog.(Message := log_message);
+		newlog.(Value := log_value)
+	end
+end
