@@ -24,3 +24,14 @@ function IsIn(TextArray : text,SearchItem : text) do
 	let xItem := ", " + trim(SearchItem) + ",";
 	contains(xSearch, xItem)
 end
+
+"- use the following in a table or function code block -";
+var htmlstring := "";
+function buildhtml( add_to_string : text , with_return : boolean ) do
+     htmlstring := htmlstring + add_to_string;
+     if with_return then
+           htmlstring := htmlstring + "
+";
+     end
+end;
+
