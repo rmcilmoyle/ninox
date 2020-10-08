@@ -1,6 +1,13 @@
 /* ------------------------------------------
 ** A collection of global functions that deal with the realities of dates in Ninox
 ** -----------------------------------------*/
+function AddWorkDay( startdate : date , days : number ) do 
+    var add_days := days;
+    let increment := if days < 0 then -1 else 1 end;
+    while workdays(startdate, date(year(startdate),month(startdate), day(startdate) + add_days)) < days + increment do 
+     add_days := add_days + increment; end;
+date(year(startdate),month(startdate), day(startdate) + add_days)     
+end; 
 
 function IsDate(xDate : date) do
 	if number(xDate) = 0 then false else true end
