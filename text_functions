@@ -79,12 +79,15 @@ function RowColumn( table : text , value : text, width : number, align_left : bo
 	xtable + if align_left then rightpad(value,width) else leftpad(value,width) end + "|";	 
 end;
 
-xtable := ColumnHeader(xtable,"TEST ONE",10,false);
-xtable := ColumnHeader(xtable,"TEST ONE",10,false);
+xtable := ColumnHeader(xtable,"Description",30,false);
+xtable := ColumnHeader(xtable,"Heading 1",10,false);
+xtable := ColumnHeader(xtable,"Heading 2",10,false);
+xtable := RowColumn(xtable,"Product One",30, true);
 xtable := RowColumn(xtable,"100.01",10, false);
 xtable := RowColumn(xtable,"100.01",10, false);
+xtable := RowColumn(xtable,"Product Two",30, true);
 xtable := RowColumn(xtable,"100.01",10, false);
 xtable := RowColumn(xtable,"100.01",10, false);
-let table_width := index(xtable,"_") -1;
-let rows :=cnt(split(xtable,return()));
-let onerow := item(split(xtable,return()),0 );
+
+
+xtable
