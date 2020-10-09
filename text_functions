@@ -35,3 +35,56 @@ function buildhtml( add_to_string : text , with_return : boolean ) do
      end
 end;
 
+var xtable := "";
+function leftpad( string_to_pad: text , width : number ) do
+	"---------------------------------
+	 default ninox functions don't handle the case 
+	 where the string is longer than required
+	 ---------------------------------";
+	let string := lpad(string_to_pad,width," ");
+	substring(string,length(string)-width, length(string));
+end;
+function rightpad(string_to_pad: text, width : number ) do
+	"---------------------------------
+	 default ninox functions don't handle the case 
+	 where the string is longer than required
+	 ---------------------------------";
+	 substring(rpad(string_to_pad, width, " "),0,width);
+end;
+function return() do
+"
+";
+end;
+function ColumnHeader( table : text , header : text, width : number, align_left : boolean) do
+	if length(table) = 0 then 
+		"|" + if align_left then rightpad(header,width) else leftpad(header,width) end + "|" ;
+	else
+		table + if align_left then rightpad(header,width) else leftpad(header,width) end  + "|" ;
+	end;	 
+end;
+function RowColumn( table : text , value : text, width : number, align_left : boolean) do
+	"---------------------------------
+	 check for this being the first row
+	 ---------------------------------";
+	 var xtable := table;
+	if not contains(table,"_") then
+		"---------------------------
+		 first row of values
+		 ---------------------------";
+		 xtable := table + return() + rpad("",length(table),"_") + return() ;
+	end;
+	let table_width := index(table,"_") -1;
+        let rows :=cnt(split(table,return()));
+	if length(item(split(table,return()),rows )) >= table_width  then xtable := xtable + return() + "|" ; end; 
+	xtable + if align_left then rightpad(value,width) else leftpad(value,width) end + "|";	 
+end;
+
+xtable := ColumnHeader(xtable,"TEST ONE",10,false);
+xtable := ColumnHeader(xtable,"TEST ONE",10,false);
+xtable := RowColumn(xtable,"100.01",10, false);
+xtable := RowColumn(xtable,"100.01",10, false);
+xtable := RowColumn(xtable,"100.01",10, false);
+xtable := RowColumn(xtable,"100.01",10, false);
+let table_width := index(xtable,"_") -1;
+let rows :=cnt(split(xtable,return()));
+let onerow := item(split(xtable,return()),0 );
