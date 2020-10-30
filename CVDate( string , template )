@@ -1,0 +1,62 @@
+function CVDate(textdate : text,format : text) do
+	"------------------------------------
+ Valid formats:
+ MMM : three letter month
+ MM : two digit month
+ YY : year
+ YYYY : year
+ DD : day numeric
+ ------------------------------------";
+	let parts := split(replacex(textdate, "(/| |\\|,|\.)", "g", "-"), "-");
+	let pattern := split(upper(replacex(format, "(/| |\\|,|\.)", "g", "-")), "-");
+	var month := month(today());
+	var day := 1;
+	var year := year(today());
+	for i in range(0, cnt(pattern)) do
+		if item(pattern, i) = "MM" then
+			month := number(item(parts, i))
+		end;
+		if item(pattern, i) = "MMM" then
+			month := switch substr(upper(item(parts, i)), 0, 3) do
+				case "JAN":
+					1
+				case "FEB":
+					2
+				case "MAR":
+					3
+				case "APR":
+					4
+				case "MAY":
+					5
+				case "JUN":
+					6
+				case "JUL":
+					7
+				case "AUG":
+					8
+				case "SEP":
+					9
+				case "OCT":
+					10
+				case "NOV":
+					11
+				default:
+					12
+				end
+		end;
+		if item(pattern, i) = "YY" then
+			year := if number(item(parts, i)) < 100 then
+					floor(year(today()) / 100) * 100
+				else
+					0
+				end + number(item(parts, i))
+		end;
+		if item(pattern, i) = "YYYY" then
+			year := number(item(parts, i))
+		end;
+		if item(pattern, i) = "DD" then
+			day := number(item(parts, i))
+		end
+	end;
+	date(year, month, day)
+end;
