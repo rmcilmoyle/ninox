@@ -1,0 +1,17 @@
+function phoneformat( phone : text , format : text ) do
+"----------------
+ Format phone numbers
+ assumes greedy from the right
+ # is a digit, everything else is formating
+ eg. (###) ###-#### 
+ ----------------";
+ var formated := format;
+ let cleanphone := replacex(phone, "(-|\(|\)|\.|,| )*","g","");
+ "-- use the numbers for right to left to fill the format --";
+ while length(cleanphone) > 0 do
+   let lastdigit := substr(cleanphone, length(cleanphone) - 1,1);
+   formated := replacex(formated, "(#)(?!.*\1)","",lastdigit);
+   cleanphone := substr(cleanphone, 0, length(cleanphone) - 1 );
+ end;
+ formated
+end;
