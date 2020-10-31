@@ -1,0 +1,6 @@
+function daysbetween(T : date,L : date) do
+	let years := year(L) - year(T);
+	let months := absolute(month(T) - month(L));
+	var daysdiff := days(date(year(T) + years, month(T) + months, day(T)), L);
+	text(years) + " Year" + if years > 1 then "s " else " " end + text(months) + " Month" + if months > 1 then "s " else " " end + text(daysdiff) + " Day" + if daysdiff > 1 then "s" else "" end
+end;
