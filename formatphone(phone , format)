@@ -15,3 +15,7 @@ function phoneformat( phone : text , format : text ) do
  end;
  formated
 end;
+
+function validphone( phone : text) do
+ not contains(phone,"#")
+end;
