@@ -6,7 +6,7 @@ function phoneformat( phone : text , format : text ) do
  eg. (###) ###-#### 
  ----------------";
  var formated := format;
- let cleanphone := replacex(phone, "(-|\(|\)|\.|,| )*","g","");
+ let cleanphone := replacex(phone, "[^0-9]","g","");
  "-- use the numbers for right to left to fill the format --";
  while length(cleanphone) > 0 do
    let lastdigit := substr(cleanphone, length(cleanphone) - 1,1);
