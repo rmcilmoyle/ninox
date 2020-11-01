@@ -1,5 +1,5 @@
 function IsEmpty(xText : text) do
-	if trim(xText) = "" or xText = null then
+	if length(trim(xText)) = 0 then
 		true
 	else
 		false
