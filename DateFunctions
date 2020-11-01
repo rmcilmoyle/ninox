@@ -10,15 +10,21 @@ date(year(startdate),month(startdate), day(startdate) + add_days)
 end; 
 
 function IsDate(xDate : date) do
-	if number(xDate) = 0 then false else true end
+ 	"------ Determine if this is a valid date -----";
+	if date(xDate) = date(0) then false else true end
 end;
 function DateOnly(xDate : date) do
-	date(year(xDate), month(xDate), day(xDate))
+	"---- strip out the annoying time component which causes all manner of issues ---";
+	date(roundup(number(xDate) / 86400000) * 86400000)
 end;
 function NDate(d : date) do
 	number(DateOnly(d))
 end;
 function DateCompare(d1 : date,d2 : date,op : text) do
+	"------------------------
+	 if you want to do and or scenarios you'll see 
+	 why you need this functionality
+	 -----------------------";
 	switch op do
 	case "<":
 		NDate(d1) < NDate(d2)
@@ -33,6 +39,9 @@ function DateCompare(d1 : date,d2 : date,op : text) do
 	end
 end;
 function between(d : date,s : date,e : date) do
+	"-------------------------
+	 reliably determin if a date is between to other dates
+	 ------------------------";
 	if NDate(d) >= NDate(s) and NDate(d) <= NDate(e) then
 		true
 	else
@@ -42,10 +51,10 @@ end;
 /* ---------------------------------------------
 ** Add W workdays to a date returning the workday that would result
 ** ---------------------------------------------*/
-function WorkEndDate(S : date,W : number) do
+function AddWorkDays(S : date,W : number) do
 	var X := 1;
-	if W > 1 then
-		while workdays(S, date(year(S), month(S), day(S) + X + 1)) <= W and X < 365 do 
+	if W > 0 and IsDate(S) then
+		while workdays(S, date(year(S), month(S), day(S) + X + 1)) <= W  do 
 			X := X + 1
 		end
 ;
