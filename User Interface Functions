@@ -1,0 +1,57 @@
+"---------------------------
+ In order to use these item, there must be a formula field
+ where the return value is html(UIHide(options)) or html(UIShow( options ))
+ this allows you to dynamically change the visibility of Ninox decorations
+ ---------------------------";
+
+function UIHide(options : text) do
+	var html := "";
+	for items in split(options, ",") do
+		html := html + switch items do
+			case "print":
+				"<style>div.hud-menu-button.i-32-24.i-light-grey.i-setting-print{display: none;}</style>"
+			case "trash":
+				"<style>div.hud-menu-button.i-32-24.i-light-grey.i-setting-trash{display: none;}</style>"
+			case "copy":
+				"<style>div.hud-menu-button.i-32-24.i-light-grey.i-setting-copy{display: none;}</style>"
+			case "add":
+				"<style>div.hud-menu-button.i-32-24.i-light-grey.i-setting-add{display: none;}</style>"
+			case "line":
+				"<style>div.component.br{display: none;}</style>"
+			default:
+				""
+			end
+	end;
+	html
+end;
+function UIShow(options : text) do
+	var html := "";
+	for items in split(options, ",") do
+		html := html + switch items do
+			case "print":
+				"<style>div.hud-menu-button.i-32-24.i-light-grey.i-setting-print{display: inline;}</style>"
+			case "trash":
+				"<style>div.hud-menu-button.i-32-24.i-light-grey.i-setting-trash{display: inline;}</style>"
+			case "copy":
+				"<style>div.hud-menu-button.i-32-24.i-light-grey.i-setting-copy{display: inline;}</style>"
+			case "add":
+				"<style>div.hud-menu-button.i-32-24.i-light-grey.i-setting-add{display: inline;}</style>"
+			case "line":
+				"<style>div.component.br{display: none;}</style>"
+			default:
+				""
+			end
+	end;
+	html
+end;
+function formcolor(color : text) do
+  "------------------------
+   change the color of the current form 
+   the color should be in the form of #AFAFAF
+   this could be used if you want to bring attention to a key status
+   ------------------------";
+	"<style>div.object.--ul-document-object{background-color: " + color + ";}</style>"
+end;
+function UI(options : text,flag : boolean) do
+	if flag then UIShow(options) else UIHide(options) end
+end;
