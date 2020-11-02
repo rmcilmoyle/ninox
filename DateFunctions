@@ -67,3 +67,12 @@ function AddWorkDays(S : date,W : number) do
 		S
 	end
 end;
+function monthsbetween(d1 : date, d2 : date ) do
+       ( year(d2) - year(d1)  ) * 12 + month(d2) - month(d1) + 1
+end;
+function weeksbetween(d1 :date, d2 : date ) do
+       let yrs := if year(d2) - year(d1) > 1 then year(d2) - year(d1) - 1 else 0 end;
+       let mon1 := if date(year(d1),month(d1),week(d1)*7) < d1 then 53 else week(d1) end;
+       let mon2 := if date(year(d2),month(d2),week(d2)*7) < d2 then 53 else week(d2) end;
+       yrs * 52 + if week(date(year(d1),12,31)) < 52 then 53 else 52 end - mon1 ;
+end; 
