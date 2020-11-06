@@ -1,11 +1,12 @@
 function IsEmpty(xText : text) do
+	"--- determine if the string is empty";
 	if length(trim(xText)) = 0 then
 		true
 	else
 		false
 	end;
 end;
-	
+
 function clean(xString : text,xReplace : text) do
 	let valid := "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM,.;:!#$%&()/\ ";
 	var result := "";
@@ -38,7 +39,7 @@ end;
 var xtable := "";
 function leftpad( string_to_pad: text , width : number ) do
 	"---------------------------------
-	 default ninox functions don't handle the case 
+	 default ninox functions don't handle the case
 	 where the string is longer than required
 	 ---------------------------------";
 	let string := lpad(string_to_pad,width," ");
@@ -46,7 +47,7 @@ function leftpad( string_to_pad: text , width : number ) do
 end;
 function rightpad(string_to_pad: text, width : number ) do
 	"---------------------------------
-	 default ninox functions don't handle the case 
+	 default ninox functions don't handle the case
 	 where the string is longer than required
 	 ---------------------------------";
 	 substring(rpad(string_to_pad, width, " "),0,width);
@@ -56,11 +57,11 @@ function return() do
 ";
 end;
 function ColumnHeader( table : text , header : text, width : number, align_left : boolean) do
-	if length(table) = 0 then 
+	if length(table) = 0 then
 		"|" + if align_left then rightpad(header,width) else leftpad(header,width) end + "|" ;
 	else
 		table + if align_left then rightpad(header,width) else leftpad(header,width) end  + "|" ;
-	end;	 
+	end;
 end;
 function RowColumn( table : text , value : text, width : number, align_left : boolean) do
 	"---------------------------------
@@ -75,8 +76,8 @@ function RowColumn( table : text , value : text, width : number, align_left : bo
 	end;
 	let table_width := index(table,"_") -1;
         let rows :=cnt(split(table,return()));
-	if length(item(split(table,return()),rows )) >= table_width  then xtable := xtable + return() + "|" ; end; 
-	xtable + if align_left then rightpad(value,width) else leftpad(value,width) end + "|";	 
+	if length(item(split(table,return()),rows )) >= table_width  then xtable := xtable + return() + "|" ; end;
+	xtable + if align_left then rightpad(value,width) else leftpad(value,width) end + "|";
 end;
 
 xtable := ColumnHeader(xtable,"Description",30,false);
