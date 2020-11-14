@@ -1,0 +1,7 @@
+function AddWday( d : date , x : number ) do
+     let wd := weekday(d); "-- what weekday is it --";
+     let w := floor(x / 5) "-- how many work weeks --";
+     let y := x - 5 * w; "-- how many days the first week --";
+     let ds := if wd + y > 4 then 2 else 0 end; "-- did first week span a weekend --";
+     d + 7 * w + y + ds
+end;
